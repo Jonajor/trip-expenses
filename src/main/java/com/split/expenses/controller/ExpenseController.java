@@ -5,9 +5,12 @@ import com.split.expenses.domain.entities.Expense;
 import com.split.expenses.domain.services.ExpenseService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ExpenseController {
@@ -22,13 +25,14 @@ public class ExpenseController {
     }
 
     @PostMapping("/{trip}/expense")
-    public Expense createTrip(@PathVariable String trip, @RequestBody @Valid ExpenseDto expenseDto) throws NotFoundException {
-        return expenseService.createExpense(expenseDto);
+    public ResponseEntity<ExpenseDto> createTrip(@PathVariable String trip, @Valid @RequestBody ExpenseDto expenseDto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(expenseService.createExpense(expenseDto));
     }
 
     @GetMapping("/{trip}")
-    public String consultTrip(@PathVariable String trip){
-        return null;
+    public ResponseEntity<List<ExpenseDto>> consultTrip(@PathVariable String trip){
+        return ResponseEntity.ok().body(expenseService.expenseList(trip));
     }
 
     @PostMapping("/{trip}/close")
