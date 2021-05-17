@@ -2,6 +2,7 @@ package com.split.expenses.controller;
 
 import com.split.expenses.domain.dtos.ExpenseDto;
 import com.split.expenses.domain.dtos.SummaryDto;
+import com.split.expenses.domain.dtos.UserDto;
 import com.split.expenses.domain.services.ExpenseService;
 import com.split.expenses.domain.exceptions.ExpenseNotFoundException;
 import com.split.expenses.domain.exceptions.InternalServerErrorException;
@@ -24,11 +25,12 @@ public class ExpenseController {
     @Autowired
     ExpenseService expenseService;
 
-    @GetMapping("/login")
+/*
+    @PostMapping("/login")
     public String login(){
         //TODO: Implementar a parte de login na parte de config
         return "teste trip";
-    }
+    }*/
 
     @PostMapping("/{trip}/expense")
     public ResponseEntity<ExpenseDto> createTrip(@PathVariable String trip, @Valid @RequestBody ExpenseDto expenseDto) {

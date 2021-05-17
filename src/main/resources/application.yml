@@ -10,11 +10,5 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
 
----
-#spring:
-#  security:
-#    user:
-#      name: root
-#      password: root
-#    basic:
-#      enabled: false
+jwt:
+  secret: techgeeknext
