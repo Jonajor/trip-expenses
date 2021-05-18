@@ -4,7 +4,7 @@ import com.split.expenses.domain.dtos.ExpenseDto;
 import com.split.expenses.domain.dtos.SummaryDto;
 import com.split.expenses.domain.entities.Expense;
 import com.split.expenses.domain.enums.StatusEnum;
-import com.split.expenses.domain.mappers.ExpenseMapper;
+import com.split.expenses.domain.mappers.MapperObject;
 import com.split.expenses.domain.repositories.ExpenseRepository;
 import com.split.expenses.domain.exceptions.UnprocessableEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class ExpenseService {
     ExpenseRepository expenseRepository;
 
     @Autowired
-    ExpenseMapper expenseMapper;
+    MapperObject mapperObject;
 
     public Boolean existTrip(String tripId){
         return expenseRepository.existsByTripId(tripId);
@@ -36,10 +36,10 @@ public class ExpenseService {
         var expense = expenseRepository.findByTripIdAndStatus(expenseDto.getTripId(), StatusEnum.INACTIVE);
 
         if (!expense.isPresent()) {
-            var expenseDtoToExpense = expenseMapper.expenseDtoToExpense(expenseDto);
+            var expenseDtoToExpense = mapperObject.expenseDtoToExpense(expenseDto);
             expenseDtoToExpense.setStatus(StatusEnum.ACTIVE);
             expenseRepository.save(expenseDtoToExpense);
-            return expenseMapper.expenseToExpenseDto(expenseDtoToExpense);
+            return mapperObject.expenseToExpenseDto(expenseDtoToExpense);
         }else{
             throw new UnprocessableEntityException();
         }
@@ -50,12 +50,12 @@ public class ExpenseService {
                 .tripId(tripId)
                 .status(StatusEnum.INACTIVE)
                 .build();
-        return expenseMapper.expenseToExpenseDto(expenseRepository.save(expense));
+        return mapperObject.expenseToExpenseDto(expenseRepository.save(expense));
     }
 
     public Page<ExpenseDto> expenseList(String tripId, Pageable paging){
         var expense = expenseRepository.findAllByTripIdAndStatus(tripId, StatusEnum.ACTIVE, paging);
-        var expenseDto =  expenseMapper.expenseListToExpenseDto(expense);
+        var expenseDto =  mapperObject.expenseListToExpenseDto(expense);
         Page<ExpenseDto> pages = new PageImpl<ExpenseDto>(expenseDto, expense.getPageable(), expense.getTotalElements());
         return pages;
     }

@@ -2,11 +2,10 @@ package com.split.expenses.controller;
 
 import com.split.expenses.domain.dtos.ExpenseDto;
 import com.split.expenses.domain.dtos.SummaryDto;
-import com.split.expenses.domain.dtos.UserDto;
-import com.split.expenses.domain.services.ExpenseService;
 import com.split.expenses.domain.exceptions.ExpenseNotFoundException;
 import com.split.expenses.domain.exceptions.InternalServerErrorException;
 import com.split.expenses.domain.exceptions.UnprocessableEntityException;
+import com.split.expenses.domain.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,13 +23,6 @@ public class ExpenseController {
 
     @Autowired
     ExpenseService expenseService;
-
-/*
-    @PostMapping("/login")
-    public String login(){
-        //TODO: Implementar a parte de login na parte de config
-        return "teste trip";
-    }*/
 
     @PostMapping("/{trip}/expense")
     public ResponseEntity<ExpenseDto> createTrip(@PathVariable String trip, @Valid @RequestBody ExpenseDto expenseDto) {

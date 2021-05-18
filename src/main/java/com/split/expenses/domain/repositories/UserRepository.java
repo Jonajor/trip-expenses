@@ -1,9 +1,9 @@
 package com.split.expenses.domain.repositories;
 
-import com.split.expenses.domain.entities.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.split.expenses.domain.entities.UserEntity;
+import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
-    User findByUsername(String username);
+    UserEntity findByUsername(String username);
 }
