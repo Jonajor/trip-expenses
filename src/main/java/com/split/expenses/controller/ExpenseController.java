@@ -26,8 +26,7 @@ public class ExpenseController {
 
     @GetMapping("/login")
     public String login(){
-        //TODO: Implementar a parte de login na parte de config
-        return "teste trip";
+        return "test trip";
     }
 
     @PostMapping("/{trip}/expense")
